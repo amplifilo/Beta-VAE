@@ -53,6 +53,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create a ArcHydro schema')
     parser.add_argument('--max_iter', metavar='max_iter', type=int, required=False,
                         help='max iterations')
+    parser.add_argument('--batch_size', metavar='batch_size', type=int, required=False,
+                        help='batch_size')
 
 
     # parser.add_argument('--schema', metavar='path', required=True,
@@ -66,6 +68,8 @@ if __name__ == '__main__':
     mnist_args = get_mnist_args()
     if args.max_iter is not None:
         mnist_args.max_iter = args.max_iter
+    if args.batch_size is not None:
+        mnist_args.batch_size = args.batch_size
 
     solver = sR.Solver(mnist_args);
     print(solver.max_iter)
