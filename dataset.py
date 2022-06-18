@@ -7,6 +7,8 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 from torchvision.datasets import ImageFolder
 from torchvision import transforms
+from torchvision import datasets
+from torchvision.transforms import ToTensor, Compose, Resize
 
 
 def is_power_of_2(num):
@@ -52,6 +54,7 @@ def return_data(args):
             transforms.ToTensor(),])
         train_kwargs = {'root':root, 'transform':transform}
         dset = CustomImageFolder
+        train_data = dset(**train_kwargs)
 
     elif name.lower() == 'celeba':
         root = os.path.join(dset_dir, 'CelebA')
@@ -60,6 +63,7 @@ def return_data(args):
             transforms.ToTensor(),])
         train_kwargs = {'root':root, 'transform':transform}
         dset = CustomImageFolder
+        train_data = dset(**train_kwargs)
 
     elif name.lower() == 'dsprites':
         root = os.path.join(dset_dir, 'dsprites-dataset/dsprites_ndarray_co1sh3sc6or40x32y32_64x64.npz')
@@ -72,12 +76,30 @@ def return_data(args):
         data = torch.from_numpy(data['imgs']).unsqueeze(1).float()
         train_kwargs = {'data_tensor':data}
         dset = CustomTensorDataset
+        train_data = dset(**train_kwargs)
+
+    elif name.lower() == 'mnist':
+        train_data = datasets.MNIST(
+            root = 'data',
+            train = True,                         
+            transform = Compose([Resize(64),ToTensor()]), 
+            download = True,            
+            )
+
+        # root = os.path.join(dset_dir, 'dsprites-dataset/dsprites_ndarray_co1sh3sc6or40x32y32_64x64.npz')
+        # if not os.path.exists(root):
+        #     import subprocess
+        #     print('Now download dsprites-dataset')
+        #     subprocess.call(['./download_dsprites.sh'])
+        #     print('Finished')
+        # data = np.load(root, encoding='bytes')
+        # data = torch.from_numpy(data['imgs']).unsqueeze(1).float()
+        # train_kwargs = {'data_tensor':train_data}
+        # dset = CustomTensorDataset
 
     else:
         raise NotImplementedError
 
-
-    train_data = dset(**train_kwargs)
     train_loader = DataLoader(train_data,
                               batch_size=batch_size,
                               shuffle=True,

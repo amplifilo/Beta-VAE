@@ -91,6 +91,7 @@ class Solver(object):
         if args.dataset.lower() == 'dsprites':
             self.nc = 1
             self.decoder_dist = 'bernoulli'
+            
         elif args.dataset.lower() == '3dchairs':
             self.nc = 3
             self.decoder_dist = 'gaussian'
