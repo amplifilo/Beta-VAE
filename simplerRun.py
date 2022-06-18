@@ -113,7 +113,7 @@ def get_args():
     _args.seed = 1
     _args.cuda = True
     _args.max_iter = 1e6
-    _args.batch_size = 128
+    _args.batch_size = 512
     _args.z_dim = 10
     _args.beta = 4          #'beta parameter for KL-term in original beta-VAE'
     _args.objective = 'H'   #'beta-vae objective proposed in Higgins et al. or Burgess et al. H/B')
