@@ -199,12 +199,12 @@ class Solver(object):
         # if self.viz_on:
         #     self.viz = visdom.Visdom(port=self.viz_port)
 
-        # self.ckpt_dir = os.path.join(args.ckpt_dir, args.viz_name)
-        # if not os.path.exists(self.ckpt_dir):
-        #     os.makedirs(self.ckpt_dir, exist_ok=True)
-        # self.ckpt_name = args.ckpt_name
-        # if self.ckpt_name is not None:
-        #     self.load_checkpoint(self.ckpt_name)
+        self.ckpt_dir = os.path.join(args.ckpt_dir, args.viz_name)
+        if not os.path.exists(self.ckpt_dir):
+            os.makedirs(self.ckpt_dir, exist_ok=True)
+        self.ckpt_name = args.ckpt_name
+        if self.ckpt_name is not None:
+            self.load_checkpoint(self.ckpt_name)
 
         self.save_output = args.save_output
         self.output_dir = os.path.join(args.output_dir, args.viz_name)
